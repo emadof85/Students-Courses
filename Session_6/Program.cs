@@ -40,6 +40,10 @@ builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -63,9 +67,16 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+});
 
 app.Run();

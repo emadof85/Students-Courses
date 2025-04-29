@@ -11,8 +11,8 @@ namespace Application.IServices
     {
         Task<IEnumerable<StudentDto>> GetAllAsync();
         Task<StudentDto> GetByIdAsync(string id);
-        Task CreateAsync(CreateStudentDto studentDto);
-        Task UpdateAsync(UpdateStudentDto dto);
+        Task<StudentDto> CreateAsync(CreateStudentDto studentDto);
+        Task<StudentDto> UpdateAsync(UpdateStudentDto dto);
         Task DeleteAsync(string id);
         Task EnrollInCourse(string studentId, int courseId);
     }

@@ -13,7 +13,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DomainLayer\Domain.csproj" />
-    <ProjectReference Include="..\InfrastructureLayer\Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

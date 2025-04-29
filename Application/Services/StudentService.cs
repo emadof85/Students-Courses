@@ -36,25 +36,18 @@ namespace Application.Services
             return _mapper.Map<StudentDto>(student);
         }
 
-        public async Task CreateAsync(CreateStudentDto studentDto)
+        public async Task<StudentDto> CreateAsync(CreateStudentDto studentDto)
         {
-            /*var student = new Student
-            {
-                FirstName = studentDto.FirstName,
-                LastName = studentDto.LastName,
-                PhoneNumber = studentDto.PhoneNumber,
-                Age = studentDto.Age,
-                StudentNumber = studentDto.StudentNumber
-            };*/
             var student = _mapper.Map<Student>(studentDto);
             student.UserName = studentDto.Email;
             student.Email = studentDto.Email;
             student.EmailConfirmed = true;
             await _studentRepository.AddAsync(student);
             await _studentRepository.SaveChangesAsync();
+            return _mapper.Map<StudentDto>(student);
         }
 
-        public async Task UpdateAsync(UpdateStudentDto dto)
+        public async Task<StudentDto> UpdateAsync(UpdateStudentDto dto)
         {
             var student = await _studentRepository.GetByIdAsync(dto.Id);
             if (student == null) throw new Exception("Student not found");
@@ -62,6 +55,7 @@ namespace Application.Services
             _mapper.Map(dto, student);
             _studentRepository.Update(student);
             await _studentRepository.SaveChangesAsync();
+            return _mapper.Map<StudentDto>(student);
         }
 
         public async Task DeleteAsync(string id)
