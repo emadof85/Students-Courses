@@ -10,7 +10,7 @@
 يحتوي المشروع على أربع طبقات رئيسية:
 
 ```
-Session_6/
+Students-Courses/
 │
 ├── Domain/         # الطبقة الأساسية - تحتوي على الكيانات والواجهات
 │   ├── Entities/
@@ -26,9 +26,11 @@ Session_6/
 │   ├── Contexts/
 │   ├── Migrations/
 │   ├── Repositories/
-│   └── Seeds/
+│   ├── Seeds/
+│   └── Authentication/
 │
 └── Presentation/   # طبقة الواجهة - ASP.NET Core Web API
+    ├── Areas/
     ├── Controllers/
     ├── Models/
     ├── Views/ (إن وجدت مؤقتًا)
