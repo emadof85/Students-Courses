@@ -3,7 +3,7 @@ using Application.IServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace Session_6.Controllers
+namespace Students_Courses.Controllers
 {
     public class AccountController : Controller
     {

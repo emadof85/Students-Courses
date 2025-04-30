@@ -8,7 +8,7 @@
     }
   },
   "profiles": {
-    "Session_6": {
+    "Students_Courses": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

@@ -3,7 +3,7 @@ using Application.IServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Session_6.Controllers
+namespace Students_Courses.Controllers
 {
     [Authorize(Roles = "Admin")]
     public class StudentController : Controller

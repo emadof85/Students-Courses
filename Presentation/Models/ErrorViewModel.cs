@@ -1,4 +1,4 @@
-namespace Session_6.Models
+namespace Students_Courses.Models
 {
     public class ErrorViewModel
     {

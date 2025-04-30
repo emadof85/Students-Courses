@@ -1,12 +1,16 @@
 ﻿using Application.DTOs;
 using Application.IServices;
+using Infrastructure.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Presentation.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [ApiController]
     [Route("api/[area]/[controller]")]
+    [Authorize]
     public class StudentsController : ControllerBase    
     {
         private readonly IStudentService _studentService;
@@ -33,6 +37,9 @@ namespace Presentation.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateStudentDto dto)
         {
+            var userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var role = HttpContext.User.FindFirst(ClaimTypes.Role)?.Value;
+
             if (!ModelState.IsValid)
                 return BadRequest(ModelState); // Return a JSON Error messages
             var createdStudent = await _studentService.CreateAsync(dto);

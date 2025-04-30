@@ -19,7 +19,7 @@ public class RegisterViewModel
     [Display(Name = "Address")]
     public string Address { get; set; }
 
-    [Required]
+    
     [Display(Name = "Age")]
     [Range(10, 100, ErrorMessage = "Age must be between 10 and 100")]
     public int? Age { get; set; } // Nullable حتى لا يُطلب إلا للطلاب
