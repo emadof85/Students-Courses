@@ -1,10 +1,12 @@
-﻿using Application.IServices;
+﻿using Application.External;
+using Application.IServices;
 using Application.Services;
 using Domain.Entities;
 using Domain.IRepositories;
 using Infrastructure;
 using Infrastructure.Authentication;
 using Infrastructure.Contexts;
+using Infrastructure.ExternalClients;
 using Infrastructure.Repositories;
 using Infrastructure.Seeds;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -105,6 +107,13 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 });
+
+builder.Services.AddHttpClient<ILoggingClient, LoggingClient>(client =>
+{
+    client.BaseAddress = new Uri(configuration["LoggingService:BaseUrl"]!);
+});
+
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 

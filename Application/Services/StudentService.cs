@@ -1,11 +1,15 @@
 ﻿using Application.DTOs;
+using Application.DTOs.Log;
+using Application.External;
 using Application.IServices;
 using AutoMapper;
 using Domain.Entities;
 using Domain.IRepositories;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,11 +20,20 @@ namespace Application.Services
         private readonly IStudentRepository _studentRepository;
         private readonly IRepository<Course> _courseRepo;
         private readonly IMapper _mapper;
-        public StudentService(IStudentRepository studentRepository, IRepository<Course> courseRepo, IMapper mapper)
+        private readonly ILoggingClient _loggingClient;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+        public StudentService(IStudentRepository studentRepository,
+            IRepository<Course> courseRepo,
+            IMapper mapper,
+            ILoggingClient loggingClient,
+            IHttpContextAccessor httpContextAccessor)
         {
             _studentRepository = studentRepository;
             _courseRepo = courseRepo;
             _mapper = mapper;
+            _loggingClient = loggingClient;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<IEnumerable<StudentDto>> GetAllAsync()
@@ -44,6 +57,14 @@ namespace Application.Services
             student.EmailConfirmed = true;
             await _studentRepository.AddAsync(student);
             await _studentRepository.SaveChangesAsync();
+            // الحصول على اسم المستخدم الحالي من التوكن
+            var userId = _httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "System";
+
+            await _loggingClient.SendLogAsync(new CreateLogRequest
+            {
+                Message = $"Student {studentDto.FirstName} {studentDto.LastName} created successfully.",
+                CreatedBy = userId
+            });
             return _mapper.Map<StudentDto>(student);
         }
 
